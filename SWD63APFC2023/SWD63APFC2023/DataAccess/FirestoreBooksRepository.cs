@@ -30,9 +30,57 @@ namespace SWD63APFC2023.DataAccess
             foreach (DocumentSnapshot documentSnapshot in allBooksQuerySnapshot.Documents)
             {
                 Book book = documentSnapshot.ConvertTo<Book>();
+                
                 books.Add(book);
             }
             return books;
+        }
+
+
+        public async Task<Book> GetBook(string isbn)
+        {
+            Query allBooksQuery = db.Collection("books").WhereEqualTo("Isbn", isbn);
+            QuerySnapshot allBooksQuerySnapshot = await allBooksQuery.GetSnapshotAsync();
+          
+            DocumentSnapshot documentSnapshot = allBooksQuerySnapshot.Documents.FirstOrDefault();
+            if (documentSnapshot == null)
+            {
+                return null;
+            }
+            else
+            {
+                Book book = documentSnapshot.ConvertTo<Book>();
+                return book;
+            }
+        }
+
+        public async void Delete(string isbn)
+        {
+            Query allBooksQuery = db.Collection("books").WhereEqualTo("Isbn", isbn);
+            QuerySnapshot allBooksQuerySnapshot = await allBooksQuery.GetSnapshotAsync();
+
+            DocumentSnapshot documentSnapshot = allBooksQuerySnapshot.Documents.FirstOrDefault();
+            if (documentSnapshot != null)
+            {
+                string id = documentSnapshot.Id;
+
+                DocumentReference bookRef = db.Collection("books").Document(id);
+                await bookRef.DeleteAsync();
+            }
+        }
+
+        public async void Update(Book b)
+        {
+            Query allBooksQuery = db.Collection("books").WhereEqualTo("Isbn", b.Isbn);
+            QuerySnapshot allBooksQuerySnapshot = await allBooksQuery.GetSnapshotAsync();
+
+            DocumentSnapshot documentSnapshot = allBooksQuerySnapshot.Documents.FirstOrDefault();
+            if (documentSnapshot != null)
+            {
+                string id = documentSnapshot.Id;
+                DocumentReference bookRef = db.Collection("books").Document(id);
+                await bookRef.SetAsync(b);
+            }
         }
     }
 }
