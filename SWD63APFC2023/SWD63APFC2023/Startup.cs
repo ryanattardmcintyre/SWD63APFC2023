@@ -50,6 +50,7 @@ namespace SWD63APFC2023
             
             string projectId = Configuration["project"];
             services.AddScoped(provider => new FirestoreBooksRepository(projectId));
+            services.AddScoped(provider => new FirestoreReservationsRepository(projectId));
 
 
             //string projectId = builder.Configuration["project"];

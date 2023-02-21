@@ -23,11 +23,11 @@ namespace SWD63APFC2023.Controllers
         }
         
         [HttpPost]
-        public IActionResult Create(Book b)
+        public async Task< IActionResult> Create(Book b)
         {
             try
             {
-                fbr.AddBook(b);
+                await fbr.AddBook(b);
                 TempData["success"] = "Book added successfully";
             }
             catch (Exception ex)
@@ -46,15 +46,28 @@ namespace SWD63APFC2023.Controllers
             return View(list);
         }
 
-        //public IActionResult Update(string isbn)
-        //{
-        //    FirestoreBooksRepository fbr = new FirestoreBooksRepository();
-        //    return View(); }
-        //public IActionResult Update(Book b)
-        //{
-        //    FirestoreBooksRepository fbr = new FirestoreBooksRepository();
-        //    return View();
+        [HttpGet] //will be called when the user first clicks on the Edit link
+        public async Task<IActionResult> GetBook(string isbn)
+        {
+            var b= await fbr.GetBook(isbn);
+            return View("Update",b);
+        }
+        [HttpPost] //will be called when the user types in the data and submits the form
+        public async Task<IActionResult> Update(Book b)
+        {
+            try
+            {
+                await fbr.Update(b);
+                TempData["success"] = "updated successfully";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = "error occurred. check your inputs, try again later";
+            }
 
-        //}
+            return View(b);
+
+        }
     }
 }

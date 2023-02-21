@@ -16,7 +16,7 @@ namespace SWD63APFC2023.DataAccess
              db = FirestoreDb.Create(project);
         }
 
-        public async void AddBook(Book b)
+        public async Task AddBook(Book b)
         {
                 await db.Collection("books").Document().SetAsync(b);
         }
@@ -69,7 +69,7 @@ namespace SWD63APFC2023.DataAccess
             }
         }
 
-        public async void Update(Book b)
+        public async Task Update(Book b)
         {
             Query allBooksQuery = db.Collection("books").WhereEqualTo("Isbn", b.Isbn);
             QuerySnapshot allBooksQuerySnapshot = await allBooksQuery.GetSnapshotAsync();
@@ -81,6 +81,15 @@ namespace SWD63APFC2023.DataAccess
                 DocumentReference bookRef = db.Collection("books").Document(id);
                 await bookRef.SetAsync(b);
             }
+        }
+
+        public async Task<string> GetBookDocumentId(string isbn)
+        {
+            Query allBooksQuery = db.Collection("books").WhereEqualTo("Isbn",isbn);
+            QuerySnapshot allBooksQuerySnapshot = await allBooksQuery.GetSnapshotAsync();
+
+            DocumentSnapshot documentSnapshot = allBooksQuerySnapshot.Documents.FirstOrDefault();
+            return documentSnapshot.Id;
         }
     }
 }
