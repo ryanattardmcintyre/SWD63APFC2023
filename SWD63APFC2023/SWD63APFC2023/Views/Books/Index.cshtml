@@ -43,9 +43,12 @@
                 @Html.DisplayFor(modelItem => item.Year)
             </td>
             <td>
-                @Html.ActionLink("Edit", "GetBook", new { isbn = item.Isbn}) |
+                @Html.ActionLink("Edit", "GetBook", new { isbn = item.Isbn }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { isbn = item.Isbn })
+                |
+                @Html.ActionLink("Reserve", "Create", "Reservations", new { isbn = item.Isbn })
+                @*<a href="/Reservations/Create?isbn=@item.Isbn">Reserve</a>*@
             </td>
         </tr>
 }

@@ -69,5 +69,11 @@ namespace SWD63APFC2023.Controllers
             return View(b);
 
         }
+
+        public  IActionResult Delete(string isbn)
+        {
+            fbr.Delete(isbn);
+            return RedirectToAction("Index");
+        }
     }
 }

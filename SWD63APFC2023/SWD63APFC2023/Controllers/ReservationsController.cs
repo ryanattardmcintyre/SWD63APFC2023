@@ -19,6 +19,7 @@ namespace SWD63APFC2023.Controllers
             fbr = _fbr;
         }
 
+        [HttpGet]
         public IActionResult Create(string isbn)
         {
             ViewBag.Isbn = isbn;
@@ -26,10 +27,28 @@ namespace SWD63APFC2023.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Reservation r)
+        public async Task<IActionResult> Create(Reservation r, DateTime from, DateTime to)
         {
-            await frr.AddReservation(r, fbr);
+            try
+            {
+                r.From = Google.Cloud.Firestore.Timestamp.FromDateTime(from.ToUniversalTime());
+                r.To = Google.Cloud.Firestore.Timestamp.FromDateTime(to.ToUniversalTime());
+
+                await frr.AddReservation(r, fbr);
+                TempData["success"] = "Reservation added";
+            }catch (Exception ex
+            )
+            {
+                TempData["error"] = "Reservation adding failed";
+            }
             return View();
+        }
+
+
+        public async Task<IActionResult> Index()
+        {
+            var list = await frr.GetReservations(fbr);
+            return View(list);
         }
     }
 }
