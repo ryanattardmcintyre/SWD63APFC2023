@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Google.Cloud.Storage.V1;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SWD63APFC2023.DataAccess;
 using SWD63APFC2023.Models;
 using System;
@@ -23,10 +26,24 @@ namespace SWD63APFC2023.Controllers
         }
         
         [HttpPost]
-        public async Task< IActionResult> Create(Book b)
+        public async Task< IActionResult> Create(Book b, IFormFile file, [FromServices] IConfiguration config)
         {
             try
             {
+                string objectName = Guid.NewGuid() + System.IO.Path.GetExtension(file.FileName);
+
+                // ------------------------ start: adding actual file to cloud storage ----------------------------
+                string bucket = config["bucket"];
+               // string projectId = config["project"];
+
+                var storage = StorageClient.Create();
+
+                using var fileStream = file.OpenReadStream();
+                storage.UploadObject(bucket, objectName, null, fileStream);
+
+                // ------------------------ end: adding actual file to cloud storage ----------------------------
+
+                //adding rest of info in firestore
                 await fbr.AddBook(b);
                 TempData["success"] = "Book added successfully";
             }
