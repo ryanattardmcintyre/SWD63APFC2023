@@ -21,5 +21,8 @@ namespace SWD63APFC2023.Models
         [FirestoreProperty]
         public int Year { get; set; }
 
+        [FirestoreProperty]
+        public string Link { get; set; }
+
     }
 }

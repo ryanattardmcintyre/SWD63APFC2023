@@ -25,22 +25,26 @@ namespace SWD63APFC2023.Controllers
             return View();
         }
         
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken()]
         public async Task< IActionResult> Create(Book b, IFormFile file, [FromServices] IConfiguration config)
         {
             try
             {
-                string objectName = Guid.NewGuid() + System.IO.Path.GetExtension(file.FileName);
+                if (file != null)
+                {
+                    string objectName = Guid.NewGuid() + System.IO.Path.GetExtension(file.FileName);
 
-                // ------------------------ start: adding actual file to cloud storage ----------------------------
-                string bucket = config["bucket"];
-               // string projectId = config["project"];
+                    // ------------------------ start: adding actual file to cloud storage ----------------------------
+                    string bucket = config["bucket"];
+                    // string projectId = config["project"];
 
-                var storage = StorageClient.Create();
+                    var storage = StorageClient.Create();
 
-                using var fileStream = file.OpenReadStream();
-                storage.UploadObject(bucket, objectName, null, fileStream);
+                    using var fileStream = file.OpenReadStream();
+                    storage.UploadObject(bucket, objectName, null, fileStream);
 
+                    b.Link = $"https://storage.googleapis.com/{bucket}/{objectName}";
+                }
                 // ------------------------ end: adding actual file to cloud storage ----------------------------
 
                 //adding rest of info in firestore
