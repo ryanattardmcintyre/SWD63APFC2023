@@ -51,7 +51,11 @@ namespace SWD63APFC2023
             string projectId = Configuration["project"];
             services.AddScoped(provider => new FirestoreBooksRepository(projectId));
             services.AddScoped(provider => new FirestoreReservationsRepository(projectId));
+            services.AddScoped<CacheMenusRepository>(provider => new CacheMenusRepository(
+                "127.0.0.1:6379"
+                ));
 
+            //string connectionStringRedisLabs = "redis-14410.c1.us-east1-2.gce.cloud.redislabs.com:14410,password=";
 
             //string projectId = builder.Configuration["project"];
             //builder.Services.AddScoped<....>
