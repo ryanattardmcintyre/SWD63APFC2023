@@ -55,6 +55,8 @@ namespace SWD63APFC2023
                 "127.0.0.1:6379"
                 ));
 
+            services.AddScoped<PubsubEmailsRepository>(provider => new PubsubEmailsRepository(projectId));
+
             //string connectionStringRedisLabs = "redis-14410.c1.us-east1-2.gce.cloud.redislabs.com:14410,password=";
 
             //string projectId = builder.Configuration["project"];

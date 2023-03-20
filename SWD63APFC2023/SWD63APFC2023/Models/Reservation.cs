@@ -19,5 +19,30 @@ namespace SWD63APFC2023.Models
         [FirestoreProperty]
         public Google.Cloud.Firestore.Timestamp To { get; set; }
 
+
+        public DateTime FromDotNet { get
+            {
+                return From.ToDateTime();
+            }
+            set
+            {
+               From=  Google.Cloud.Firestore.Timestamp.FromDateTime(value.ToUniversalTime());
+            }
+        
+        }
+
+        public DateTime ToDotNet
+        {
+            get
+            {
+                return To.ToDateTime();
+            }
+            set
+            {
+               To=  Google.Cloud.Firestore.Timestamp.FromDateTime(value.ToUniversalTime());
+            }
+
+        }
+
     }
 }

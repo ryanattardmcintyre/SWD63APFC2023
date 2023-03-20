@@ -13,10 +13,13 @@ namespace SWD63APFC2023.Controllers
 
         FirestoreReservationsRepository frr;
         FirestoreBooksRepository fbr;
-        public ReservationsController(FirestoreReservationsRepository _frr, FirestoreBooksRepository _fbr)
+        PubsubEmailsRepository pser;
+        public ReservationsController(FirestoreReservationsRepository _frr, 
+            FirestoreBooksRepository _fbr, PubsubEmailsRepository _pser)
         {
             frr = _frr;
             fbr = _fbr;
+            pser = _pser;
         }
 
         [HttpGet]
@@ -35,6 +38,8 @@ namespace SWD63APFC2023.Controllers
                 r.To = Google.Cloud.Firestore.Timestamp.FromDateTime(to.ToUniversalTime());
 
                 await frr.AddReservation(r, fbr);
+                string msgId= await pser.PushMessage(r);
+
                 TempData["success"] = "Reservation added";
             }catch (Exception ex
             )
