@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWD63APFC2023", "SWD63APFC2023\SWD63APFC2023.csproj", "{3E55185D-6AE1-42F8-B75A-FB87A55963AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubscriberApp", "SubscriberApp\SubscriberApp.csproj", "{FCA33BB8-4048-4AF9-8E7A-3B739F884A80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscriberApp", "SubscriberApp\SubscriberApp.csproj", "{FCA33BB8-4048-4AF9-8E7A-3B739F884A80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{8335204E-B26C-4D4F-9B34-D0F2C8C6BE5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{FCA33BB8-4048-4AF9-8E7A-3B739F884A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCA33BB8-4048-4AF9-8E7A-3B739F884A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCA33BB8-4048-4AF9-8E7A-3B739F884A80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8335204E-B26C-4D4F-9B34-D0F2C8C6BE5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8335204E-B26C-4D4F-9B34-D0F2C8C6BE5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8335204E-B26C-4D4F-9B34-D0F2C8C6BE5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8335204E-B26C-4D4F-9B34-D0F2C8C6BE5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

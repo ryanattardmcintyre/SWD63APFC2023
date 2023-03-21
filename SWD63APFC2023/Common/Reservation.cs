@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SWD63APFC2023.Models
+namespace Common.Models
 {
     [FirestoreData]
     public class Reservation

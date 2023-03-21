@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Google.Cloud.Diagnostics.AspNetCore3;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,9 +15,11 @@ namespace SWD63APFC2023.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IExceptionLogger _exceptionLogger;
+        public HomeController(ILogger<HomeController> logger, IExceptionLogger exceptionLogger)
         {
+            _exceptionLogger = exceptionLogger;
+
             _logger = logger;
         }
 
@@ -25,8 +28,18 @@ namespace SWD63APFC2023.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Privacy( )
         {
+            try
+            {
+                throw new Exception("This is a testing exception");
+            }
+            catch (Exception ex)
+            {
+                _exceptionLogger.Log(ex);
+            }
+
+
             return View();
         }
 

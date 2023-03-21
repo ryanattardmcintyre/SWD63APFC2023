@@ -1,6 +1,7 @@
 ﻿using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Mvc;
 using SWD63APFC2023.Models;
+using Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
