@@ -1,3 +1,4 @@
+using Google.Cloud.Diagnostics.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -20,6 +21,13 @@ namespace SWD63APFC2023
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    var config = new ConfigurationBuilder().AddJsonFile("appsettings.json", false).Build();
+
+                    string projectId = config["project"].ToString();
+                    
+                    webBuilder.ConfigureLogging(builder => builder.AddGoogle(new LoggingServiceOptions { ProjectId = 
+                      projectId }));
+
                     webBuilder.UseStartup<Startup>();
                 });
     }
